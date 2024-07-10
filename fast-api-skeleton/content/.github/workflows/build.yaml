@@ -1,0 +1,55 @@
+name: Build python app
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: 'Project ID'  # What's this input for?
+        required: true  # Is it optional or required?
+      app_name:
+        description: 'Application Name'  # What's this input for?
+        required: true  # Is it optional or required?
+    
+jobs:
+  build-fastapi-app:
+    name: Build FastAPI App
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      #- name: Setup Python
+      #  uses: actions/setup-python@v5
+      
+      #- name: Install Dependencies
+      #  run: |
+      #    cd content
+      #    python -m pip install -U pip
+      #    python -m pip install -r requirements.txt
+
+      - name: configure gcp credentials
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+
+      - name: auth docker
+        run: gcloud --quiet auth configure-docker us-east4-docker.pkg.dev
+      
+      - name: Build and push
+        run: |
+          docker build --tag "us-east4-docker.pkg.dev/${{ github.event.inputs.project_id }}/python-fastapi/${{ github.event.inputs.app_name }}:${{github.run_number}}" .
+      
+      - name: Push to artifact registry
+        run: |
+          docker push us-east4-docker.pkg.dev/${{ github.event.inputs.project_id }}/python-fastapi/${{ github.event.inputs.app_name }}:${{github.run_number}}
+          gcloud container images add-tag us-east4-docker.pkg.dev/${{ github.event.inputs.project_id }}/python-fastapi/${{ github.event.inputs.app_name }}:${{github.run_number}} us-east4-docker.pkg.dev/${{ github.event.inputs.project_id }}/python-fastapi/${{ github.event.inputs.app_name }}:latest
+      
+      - name: Deploy Cloud Run with new image
+        run: |
+          gcloud run deploy ${{ github.event.inputs.app_name }} --image us-east4-docker.pkg.dev/${{ github.event.inputs.project_id }}/python-fastapi/${{ github.event.inputs.app_name }}:${{github.run_number}}

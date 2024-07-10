@@ -1,0 +1,121 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: python-application-template
+  title: Python FastAPI Application Template
+  description: An example template that creates a simple python app deploying in cloud run
+  tags:
+    - backstage
+    - pythonFastAPI
+spec:
+  owner: user:guest
+  type: website
+
+  parameters:
+    - title: Create a Python FastAPI app in Cloud Run
+      required:
+        - project_id
+        - app_name
+      properties:
+        project_id:
+          title: Project Name
+          type: string
+          description: Name of the Project to deploy the Cloud Run
+          # ui:autofocus: true
+          # ui:options:
+          #   rows: 5
+
+        app_name:
+          title: Application Name
+          type: string
+          description: Name of application Service
+          # ui:autofocus: true
+          # ui:options:
+          #   rows: 5
+
+  steps:
+  #   - name: Read Environment
+  #     id: environment
+  #     action: humanitec:get-environment
+
+    - id: fetch-base-cloud-run
+      name: Fetch Cloud Run Base
+      action: fetch:template
+      input:
+        url: ./cloud-run-skeleton/content
+        copyWithoutRender:
+          - .github/workflows/*
+        values:
+          project_id: ${{ parameters.project_id }}
+          app_name: ${{ parameters.app_name }}
+
+    - id: publish
+      name: Publish
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        defaultBranch: main
+        description: This is cloud run ${{ parameters.app_name }} in ${{ parameters.project_id }}
+        repoUrl: github.com?owner=monkmantra&repo=${{ parameters.app_name }}
+        repoVisibility: public
+        protectDefaultBranch: false
+
+    - id: github-action-cloud-run
+      name: GitHub action for Cloud Run
+      action: github:actions:dispatch
+      input:
+        workflowId:  instance.yml # ID of GitHub action WorkFlow
+        repoUrl: 'github.com?repo=${{ parameters.app_name }}&owner=monkmantra'
+        branchOrTagName: 'main'
+        # workflowInputs:
+        #   instanceName: ${{ parameters.InstanceName }}
+        #   awsRegion: ${{ parameters.Region }}
+        #   instanceType: ${{ parameters.InstanceType }}
+        #   action: ${{ parameters.action }}
+    - id: fetch-base-app
+      name: Fetch Application Base
+      action: fetch:template
+      input:
+        url: ./fastapi-skeleton/content
+        copyWithoutRender:
+          - .github/workflows/*
+        values:
+          project_id: ${{ parameters.project_id }}
+          app_name: ${{ parameters.app_name }}
+
+    - id: publish-app
+      name: Publish Application
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        defaultBranch: main
+        description: This is Python FastAPI app ${{ parameters.app_name }} in project ${{ parameters.project_id }}
+        repoUrl: github.com?owner=monkmantra&repo=${{ parameters.app_name }}
+        repoVisibility: public
+        protectDefaultBranch: false
+
+    - id: github-action-app
+      name: GitHub action for Application
+      action: github:actions:dispatch
+      input:
+        workflowId:  build.yaml # ID of GitHub action WorkFlow
+        repoUrl: 'github.com?repo=${{ parameters.app_name }}&owner=monkmantra'
+        branchOrTagName: 'main'
+        workflowInputs:
+          project_id: ${{ parameters.project_id }}
+          app_name: ${{ parameters.app_name }}
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish-app'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish-app'].output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}
