@@ -6,7 +6,7 @@ metadata:
   description: An example template that creates a simple python app deploying in cloud run
   tags:
     - backstage
-    - pythonFastAPI
+    - python-fast-api
 spec:
   owner: user:guest
   type: website
