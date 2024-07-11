@@ -78,7 +78,6 @@ spec:
         repoUrl: github.com?owner=monkmantra&repo=terraform-${{ parameters.app_name }}
         repoVisibility: public
         protectDefaultBranch: false
-        force: true
 
     # - id: github-action-cloud-run
     #   name: GitHub action for Cloud Run
