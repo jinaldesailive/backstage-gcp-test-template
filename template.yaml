@@ -66,7 +66,7 @@ spec:
         workflowId: build.yaml # ID of GitHub action WorkFlow
         repoUrl: 'github.com?repo=app-${{ parameters.app_name }}&owner=monkmantra'
         branchOrTagName: 'main'
-        token: ${{ secrets.MY_CUSTOM_TOKEN }}
+        token: ${{ secrets.MY_FINE_TOKEN }}
         workflowInputs:
           project_id: ${{ parameters.project_id }}
           app_name: ${{ parameters.app_name }}
