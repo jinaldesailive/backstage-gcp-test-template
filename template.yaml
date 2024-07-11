@@ -41,7 +41,7 @@ spec:
       name: Fetch Application Base
       action: fetch:template
       input:
-        url: ./fastapi-skeleton/content
+        url: ./fast-api-skeleton/content
         copyWithoutRender:
           - .github/workflows/*
         values:
