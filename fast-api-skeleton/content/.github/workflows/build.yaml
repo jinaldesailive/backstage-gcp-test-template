@@ -18,19 +18,12 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      actions: read
+      checks: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      #- name: Setup Python
-      #  uses: actions/setup-python@v5
-      
-      #- name: Install Dependencies
-      #  run: |
-      #    cd content
-      #    python -m pip install -U pip
-      #    python -m pip install -r requirements.txt
 
       - name: configure gcp credentials
         uses: google-github-actions/auth@v1
