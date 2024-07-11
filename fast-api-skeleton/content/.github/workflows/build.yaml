@@ -44,7 +44,7 @@ jobs:
           docker push us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}}
           gcloud container images add-tag us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}} us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}:latest
       
-      - name: Deploy Cloud Run with new image
-        run: |
-          gcloud run deploy ${{ env.APP_NAME }} --image us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}}
+      # - name: Deploy Cloud Run with new image
+      #   run: |
+      #     gcloud run deploy ${{ env.APP_NAME }} --image us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}}
 {% endraw %}  

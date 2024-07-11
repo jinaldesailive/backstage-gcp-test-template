@@ -20,3 +20,8 @@ variable "region" {
   description = "GCP Region to provision resources in."
   default = "us-east4"
 }
+
+variable "dockerimage" {
+  type  = "string"
+  description = "Docker image URL"
+}

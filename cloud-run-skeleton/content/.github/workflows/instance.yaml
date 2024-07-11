@@ -51,6 +51,6 @@ jobs:
       
     # Apply the Terraform plan
     - name: terraform apply
-      run: terraform apply -var='project_id=${{ env.GCP_PROJECT_ID }}' -var='app_name=${{ env.APP_NAME }}' -auto-approve
+      run: terraform apply -var='project_id=${{ env.GCP_PROJECT_ID }}' -var='app_name=${{ env.APP_NAME }}' -var='dockerimage=us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}' -auto-approve
       working-directory: .
 {% endraw %}  
