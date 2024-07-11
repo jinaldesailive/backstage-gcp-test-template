@@ -63,7 +63,7 @@ spec:
       name: GitHub action for Application
       action: github:actions:dispatch
       input:
-        workflowId:  build.yaml # ID of GitHub action WorkFlow
+        workflowId: build.yaml # ID of GitHub action WorkFlow
         repoUrl: 'github.com?repo=app-${{ parameters.app_name }}&owner=monkmantra'
         branchOrTagName: 'main'
         token: ${{ secrets.MY_GITHUB_TOKEN }}
