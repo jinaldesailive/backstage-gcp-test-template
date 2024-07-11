@@ -37,6 +37,39 @@ spec:
   #   - name: Read Environment
   #     id: environment
   #     action: humanitec:get-environment
+    - id: fetch-base-app
+      name: Fetch Application Base
+      action: fetch:template
+      input:
+        url: ./fastapi-skeleton/content
+        copyWithoutRender:
+          - .github/workflows/*
+        values:
+          project_id: ${{ parameters.project_id }}
+          app_name: ${{ parameters.app_name }}
+
+    - id: publish-app
+      name: Publish Application
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        defaultBranch: main
+        description: This is Python FastAPI app ${{ parameters.app_name }} in project ${{ parameters.project_id }}
+        repoUrl: github.com?owner=monkmantra&repo=app-${{ parameters.app_name }}
+        repoVisibility: public
+        protectDefaultBranch: false
+
+    - id: github-action-app
+      name: GitHub action for Application
+      action: github:actions:dispatch
+      input:
+        workflowId:  build.yaml # ID of GitHub action WorkFlow
+        repoUrl: 'github.com?repo=app-${{ parameters.app_name }}&owner=monkmantra'
+        branchOrTagName: 'main'
+        token: ${{ secrets.MY_GITHUB_TOKEN }}
+        workflowInputs:
+          project_id: ${{ parameters.project_id }}
+          app_name: ${{ parameters.app_name }}
 
     - id: fetch-base-cloud-run
       name: Fetch Cloud Run Base
@@ -56,7 +89,7 @@ spec:
         allowedHosts: ['github.com']
         defaultBranch: main
         description: This is cloud run ${{ parameters.app_name }} in ${{ parameters.project_id }}
-        repoUrl: github.com?owner=monkmantra&repo=${{ parameters.app_name }}
+        repoUrl: github.com?owner=monkmantra&repo=terraform-${{ parameters.app_name }}
         repoVisibility: public
         protectDefaultBranch: false
 
@@ -65,45 +98,14 @@ spec:
       action: github:actions:dispatch
       input:
         workflowId:  instance.yml # ID of GitHub action WorkFlow
-        repoUrl: 'github.com?repo=${{ parameters.app_name }}&owner=monkmantra'
+        repoUrl: 'github.com?repo=terraform-${{ parameters.app_name }}&ownermonkman=tra'
         branchOrTagName: 'main'
         # workflowInputs:
         #   instanceName: ${{ parameters.InstanceName }}
         #   awsRegion: ${{ parameters.Region }}
         #   instanceType: ${{ parameters.InstanceType }}
         #   action: ${{ parameters.action }}
-    - id: fetch-base-app
-      name: Fetch Application Base
-      action: fetch:template
-      input:
-        url: ./fastapi-skeleton/content
-        copyWithoutRender:
-          - .github/workflows/*
-        values:
-          project_id: ${{ parameters.project_id }}
-          app_name: ${{ parameters.app_name }}
 
-    - id: publish-app
-      name: Publish Application
-      action: publish:github
-      input:
-        allowedHosts: ['github.com']
-        defaultBranch: main
-        description: This is Python FastAPI app ${{ parameters.app_name }} in project ${{ parameters.project_id }}
-        repoUrl: github.com?owner=monkmantra&repo=${{ parameters.app_name }}
-        repoVisibility: public
-        protectDefaultBranch: false
-
-    - id: github-action-app
-      name: GitHub action for Application
-      action: github:actions:dispatch
-      input:
-        workflowId:  build.yaml # ID of GitHub action WorkFlow
-        repoUrl: 'github.com?repo=${{ parameters.app_name }}&owner=monkmantra'
-        branchOrTagName: 'main'
-        workflowInputs:
-          project_id: ${{ parameters.project_id }}
-          app_name: ${{ parameters.app_name }}
 
     - id: register
       name: Register
