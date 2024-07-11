@@ -31,7 +31,7 @@ resource "google_cloud_run_v2_service" "default" {
     containers {
       name  = "idp-app"
       ports {
-        container_port = 80
+        container_port = 8000
       }
       image   = "us-east4-docker.pkg.dev/${var.project_id}/python-fastapi/${var.app_name}:latest"
       # image = "httpd:latest"

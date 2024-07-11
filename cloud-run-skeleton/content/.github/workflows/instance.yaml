@@ -18,7 +18,7 @@ jobs:
       contents: read
     steps:
     - name: Wait ..
-      run: sleep 180s
+      run: sleep 150s
       shell: bash
     
     # checkout the code from the repository
