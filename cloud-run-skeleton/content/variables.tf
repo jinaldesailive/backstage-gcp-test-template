@@ -18,10 +18,10 @@ variable "app_name" {
 variable "region" {
   type        = string
   description = "GCP Region to provision resources in."
-  default = "us-east4"
+  default     = "us-east4"
 }
 
 variable "dockerimage" {
-  type  = "string"
+  type        = string
   description = "Docker image URL"
 }

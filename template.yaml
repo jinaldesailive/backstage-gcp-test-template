@@ -96,12 +96,19 @@ spec:
         #   instanceType: ${{ parameters.InstanceType }}
         #   action: ${{ parameters.action }}
 
-    - id: register
-      name: Register
+    - id: register-app
+      name: Register App
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['publish-app'].output.repoContentsUrl }}
-        catalogInfoPath: '/catalog-info.yaml'
+        catalogInfoPath: './app-${{ parameters.app_name }}/catalog-info.yaml'
+
+    - id: register-infa
+      name: Register Infa
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish-infa'].output.repoContentsUrl }}
+        catalogInfoPath: './terraform-${{ parameters.app_name }}/catalog-info.yaml'
 
   output:
     links:
