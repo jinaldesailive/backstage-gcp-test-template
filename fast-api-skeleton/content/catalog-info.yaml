@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: infra-${{ values.app_name | dump }}
+  name: app-${{ values.app_name | dump }}
   annotations:
     "backstage.io/project": ${{ values.project_id | dump }}
     "backstage.io/cloud-run": ${{ values.app_name | dump }}

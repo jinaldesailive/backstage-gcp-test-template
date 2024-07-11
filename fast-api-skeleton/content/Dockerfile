@@ -10,13 +10,13 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements.txt file
-COPY /content/requirements.txt requirements.txt
+COPY requirements.txt requirements.txt
 
 # Install dependencies
 RUN pip install -r requirements.txt
 
 # Copy the rest of the project files
-COPY /content .
+COPY . .
 
 # Expose the port on which the FastAPI app will run
 ENV PORT=8080
