@@ -33,8 +33,6 @@ spec:
       action: fetch:template
       input:
         url: ./fast-api-skeleton/content
-        copyWithoutRender:
-          - .github/workflows/*
         values:
           project_id: ${{ parameters.project_id }}
           app_name: ${{ parameters.app_name }}
@@ -66,8 +64,6 @@ spec:
       action: fetch:template
       input:
         url: ./cloud-run-skeleton/content
-        copyWithoutRender:
-          - .github/workflows/*
         values:
           project_id: ${{ parameters.project_id }}
           app_name: ${{ parameters.app_name }}
