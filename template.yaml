@@ -33,6 +33,7 @@ spec:
       action: fetch:template
       input:
         url: ./fast-api-skeleton/content
+        targetPath: ./app-${{ parameters.app_name }}
         values:
           project_id: ${{ parameters.project_id }}
           app_name: ${{ parameters.app_name }}
@@ -47,6 +48,7 @@ spec:
         repoUrl: github.com?owner=monkmantra&repo=app-${{ parameters.app_name }}
         repoVisibility: public
         protectDefaultBranch: false
+        sourcePath: ./app-${{ parameters.app_name }}
 
     # - id: github-action-app
     #   name: GitHub action for Application
@@ -64,6 +66,7 @@ spec:
       action: fetch:template
       input:
         url: ./cloud-run-skeleton/content
+        targetPath: ./terraform-${{ parameters.app_name }}
         values:
           project_id: ${{ parameters.project_id }}
           app_name: ${{ parameters.app_name }}
@@ -78,6 +81,7 @@ spec:
         repoUrl: github.com?owner=monkmantra&repo=terraform-${{ parameters.app_name }}
         repoVisibility: public
         protectDefaultBranch: false
+        sourcePath: ./terraform-${{ parameters.app_name }}
 
     # - id: github-action-cloud-run
     #   name: GitHub action for Cloud Run
