@@ -33,7 +33,7 @@ resource "google_cloud_run_v2_service" "default" {
       ports {
         container_port = 80
       }
-      image   = "us-east4-docker.pkg.dev/${var.project_id}/app-image/test-image:latest"
+      image   = "us-east4-docker.pkg.dev/${var.project_id}/python-fastapi/${var.app_name}:latest"
       # image = "httpd:latest"
     }
     vpc_access {

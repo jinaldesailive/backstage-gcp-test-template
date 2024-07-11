@@ -1,15 +1,20 @@
 name: Build python app
 
 on:
-  workflow_dispatch:
-    inputs:
-      project_id:
-        description: 'Project ID'  # What's this input for?
-        required: true  # Is it optional or required?
-      app_name:
-        description: 'Application Name'  # What's this input for?
-        required: true  # Is it optional or required?
-    
+  push:
+    branches: main
+      # inputs:
+      #   project_id:
+      #     description: 'Project ID'  # What's this input for?
+      #     required: true  # Is it optional or required?
+      #   app_name:
+      #     description: 'Application Name'  # What's this input for?
+      #     required: true  # Is it optional or required?
+
+env:
+  APP_NAME: ${{ values.app_name }}
+
+{% raw %}
 jobs:
   build-fastapi-app:
     name: Build FastAPI App
@@ -38,13 +43,14 @@ jobs:
       
       - name: Build and push
         run: |
-          docker build --tag "us-east4-docker.pkg.dev/${{ github.event.inputs.project_id }}/python-fastapi/${{ github.event.inputs.app_name }}:${{github.run_number}}" .
+          docker build --tag "us-east4-docker.pkg.dev/png-gcp-learning-poc/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}}" .
       
       - name: Push to artifact registry
         run: |
-          docker push us-east4-docker.pkg.dev/${{ github.event.inputs.project_id }}/python-fastapi/${{ github.event.inputs.app_name }}:${{github.run_number}}
-          gcloud container images add-tag us-east4-docker.pkg.dev/${{ github.event.inputs.project_id }}/python-fastapi/${{ github.event.inputs.app_name }}:${{github.run_number}} us-east4-docker.pkg.dev/${{ github.event.inputs.project_id }}/python-fastapi/${{ github.event.inputs.app_name }}:latest
+          docker push us-east4-docker.pkg.dev/png-gcp-learning-poc/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}}
+          gcloud container images add-tag us-east4-docker.pkg.dev/png-gcp-learning-poc/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}} us-east4-docker.pkg.dev/png-gcp-learning-poc/python-fastapi/${{ env.APP_NAME }}:latest
       
       - name: Deploy Cloud Run with new image
         run: |
-          gcloud run deploy ${{ github.event.inputs.app_name }} --image us-east4-docker.pkg.dev/${{ github.event.inputs.project_id }}/python-fastapi/${{ github.event.inputs.app_name }}:${{github.run_number}}
+          gcloud run deploy ${{ env.APP_NAME }} --image us-east4-docker.pkg.dev/png-gcp-learning-poc/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}}
+{% endraw %}  
