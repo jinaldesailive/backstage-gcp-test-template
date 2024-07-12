@@ -101,14 +101,14 @@ spec:
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['publish-app'].output.repoContentsUrl }}
-        catalogInfoPath: './app-${{ parameters.app_name }}/catalog-info.yaml'
+        catalogInfoPath: '/catalog-info.yaml'
 
     - id: register-infa
       name: Register Infa
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['publish-infa'].output.repoContentsUrl }}
-        catalogInfoPath: './terraform-${{ parameters.app_name }}/catalog-info.yaml'
+        catalogInfoPath: '/catalog-info.yaml'
 
   output:
     links:
@@ -116,6 +116,9 @@ spec:
         url: ${{ steps['publish-app'].output.remoteUrl }}
       - title: Terraform Infra Repository
         url: ${{ steps['publish-infra'].output.remoteUrl }}
-      - title: Open in catalog
+      - title: Open Application in catalog
         icon: catalog
-        entityRef: ${{ steps['register'].output.entityRef }}
+        entityRef: ${{ steps['register-app'].output.entityRef }}
+      - title: Open Infra in catalog
+        icon: catalog
+        entityRef: ${{ steps['register-infra'].output.entityRef }}
