@@ -21,7 +21,7 @@ variable "region" {
   default     = "us-east4"
 }
 
-variable "dockerimage" {
-  type        = string
-  description = "Docker image URL"
-}
+# variable "dockerimage" {
+#   type        = string
+#   description = "Docker image URL"
+# }
