@@ -103,8 +103,8 @@ spec:
         repoContentsUrl: ${{ steps['publish-app'].output.repoContentsUrl }}
         catalogInfoPath: '/catalog-info.yaml'
 
-    - id: register-infa
-      name: Register Infa
+    - id: register-infra
+      name: Register Infra
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['publish-infra'].output.repoContentsUrl }}
