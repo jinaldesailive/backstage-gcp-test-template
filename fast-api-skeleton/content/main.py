@@ -1,20 +1,14 @@
 from fastapi import FastAPI
 import uvicorn
-from sqlalchemy import (
-    Column,
-    Integer,
-    MetaData,
-    String,
-    Table,
-    create_engine,
-    select,
-)
+from google.cloud import spanner
+from google.cloud.spanner_admin_instance_v1.types import spanner_instance_admin
+from google.cloud.spanner_v1 import DirectedReadOptions, param_types
+from google.cloud.spanner_v1.data_types import JsonObject
+from google.protobuf import field_mask_pb2  # type: ignore
 
 app = FastAPI()
-engine = create_engine(
-    "spanner+spanner:///projects/png-gcp-learning-poc/instances/appdb/databases/tododb"
-)
-table = Table("tasks", MetaData(bind=engine), autoload=True)
+instance_id="appdb"
+database_id="tododb"
 
 @app.get("/hc/")
 def healthcheck():
@@ -22,9 +16,17 @@ def healthcheck():
 
 @app.get("/db/")
 def get_db_data():
-    with engine.begin() as connection:
-        for row in connection.execute(select(["*"], from_obj=table)).fetchall():
-            print(row)
+    spanner_client = spanner.Client()
+    instance = spanner_client.instance(instance_id)
+    database = instance.database(database_id)
+
+    with database.snapshot() as snapshot:
+        results = snapshot.execute_sql(
+            "SELECT id, title, status FROM tasks"
+        )
+
+        for row in results:
+            print("Task ID: {}, Task Title: {}, Task Status: {}".format(*row))
 
 @app.get("/")
 async def root():
