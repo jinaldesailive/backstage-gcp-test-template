@@ -48,4 +48,5 @@ jobs:
 {% endraw %}  
 
   call-cd-workflow:
+    needs: build-fastapi-app
     uses: monkmantra/terraform-${{ values.app_name }}/.github/workflows/instance.yaml@main
