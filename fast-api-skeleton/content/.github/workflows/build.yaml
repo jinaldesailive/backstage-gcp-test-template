@@ -45,21 +45,9 @@ jobs:
           docker push us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}}
           gcloud container images add-tag us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}} us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}:latest
 
-  call-cloud-run-deployment-workflow:
-    name: Call Cloud Run deployment CD workflow
-    runs-on: ubuntu-latest
-
-    permissions:
-      id-token: write
-      contents: read
-      actions: read
-      checks: write
-      issues: write
-      pull-requests: write
-    
-    steps:
-      - name: Call Infra (CD) pipeline
-        uses: monkmantra/${{ env.REPO_NAME }}/.github/workflows/instance.yaml@main
+  call-cd-workflow:
+    uses: monkmantra/${{ env.REPO_NAME }}/.github/workflows/instance.yaml@main
+        
       
       # - name: Deploy Cloud Run with new image
       #   run: |
