@@ -20,13 +20,17 @@ def get_db_data():
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
+    output1=""
+
     with database.snapshot() as snapshot:
         results = snapshot.execute_sql(
             "SELECT id, title, status FROM tasks"
         )
 
         for row in results:
-            print("Task ID: {}, Task Title: {}, Task Status: {}".format(*row))
+            output1+="Task ID: {}, Task Title: {}, Task Status: {}".format(*row)
+    
+    return output1;
 
 @app.get("/")
 async def root():
