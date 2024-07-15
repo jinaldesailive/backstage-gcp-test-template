@@ -15,8 +15,8 @@ def healthcheck():
 @app.get("/db/")
 def get_db_data():
     with engine.begin() as connection:
-    for row in connection.execute(select(["*"], from_obj=table)).fetchall():
-        print(row)
+        for row in connection.execute(select(["*"], from_obj=table)).fetchall():
+            print(row)
 
 @app.get("/")
 async def root():
