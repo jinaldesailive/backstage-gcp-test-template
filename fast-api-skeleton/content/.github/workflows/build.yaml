@@ -48,5 +48,6 @@ jobs:
 {% endraw %}  
 
   call-cd-workflow:
+    name: Deploy FastAPI App in Cloud Run
     needs: build-fastapi-app
     uses: monkmantra/terraform-${{ values.app_name }}/.github/workflows/instance.yaml@main
