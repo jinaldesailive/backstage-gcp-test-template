@@ -1,7 +1,6 @@
 name: Deploy Cloud Run
 
 on:
-  workflow_dispatch:
   workflow_call:
 
 env:
