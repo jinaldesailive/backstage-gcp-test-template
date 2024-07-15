@@ -16,7 +16,8 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    # steps:
+    
+    steps:
     # - name: Wait ..
     #   run: sleep 150s
     #   shell: bash
