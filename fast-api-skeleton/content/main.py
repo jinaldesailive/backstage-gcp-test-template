@@ -1,6 +1,14 @@
 from fastapi import FastAPI
 import uvicorn
-from sqlalchemy import MetaData, Table, create_engine, select
+from sqlalchemy import (
+    Column,
+    Integer,
+    MetaData,
+    String,
+    Table,
+    create_engine,
+    select,
+)
 
 app = FastAPI()
 engine = create_engine(
