@@ -4,7 +4,7 @@ from sqlalchemy import MetaData, Table, create_engine, select
 
 app = FastAPI()
 engine = create_engine(
-    "spanner:///projects/png-gcp-learning-poc/instances/appdb/databases/tododb"
+    "spanner+spanner:///projects/png-gcp-learning-poc/instances/appdb/databases/tododb"
 )
 table = Table("tasks", MetaData(bind=engine), autoload=True)
 
