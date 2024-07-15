@@ -7,6 +7,7 @@ on:
 env:
   APP_NAME: ${{ values.app_name }}
   GCP_PROJECT_ID: ${{ values.project_id }}
+  REPO_NAME: terraform-${{ values.app_name }}
 
 {% raw %}
 jobs:
@@ -43,6 +44,9 @@ jobs:
         run: |
           docker push us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}}
           gcloud container images add-tag us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}:${{github.run_number}} us-east4-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/python-fastapi/${{ env.APP_NAME }}:latest
+
+      - name: Call Infra (CD) pipeline
+        uses: monkmantra/${{ env.REPO_NAME }}/.github/workflows/instance.yaml@main
       
       # - name: Deploy Cloud Run with new image
       #   run: |

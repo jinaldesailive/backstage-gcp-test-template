@@ -1,8 +1,8 @@
 name: Deploy Cloud Run
 
 on:
-  push:
-    branches: main
+  workflow_dispatch:
+  workflow_call:
 
 env:
   APP_NAME: ${{ values.app_name }}
@@ -16,10 +16,10 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    steps:
-    - name: Wait ..
-      run: sleep 150s
-      shell: bash
+    # steps:
+    # - name: Wait ..
+    #   run: sleep 150s
+    #   shell: bash
     
     # checkout the code from the repository
     - name: Checkout code
