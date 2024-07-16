@@ -5,3 +5,9 @@ nav:
   - Introduction: index.md
   - FastAPI Application: fastapi/readme.md
   - Terraform Deployment: infra/readme.md
+
+plugins:
+  - techdocs-core
+
+theme:
+  name: material
