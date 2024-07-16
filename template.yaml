@@ -3,7 +3,9 @@ kind: Template
 metadata:
   name: python-application-template
   title: Python FastAPI Application Template
-  description: An example template that creates a simple python app deploying in cloud run
+  description: An example template that creates a simple python app deploying in cloud run.
+  annotations:
+    backstage.io/techdocs-ref: dir:.
   tags:
     - backstage
     - python-fast-api
