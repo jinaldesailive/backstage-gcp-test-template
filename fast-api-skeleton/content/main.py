@@ -18,7 +18,7 @@ def get_db_data():
     database = instance.database(database_id)
 
     output1="<h1>TODO List</h1>"
-    output1="Task ID, Task Title, Task Status <br>"
+    output1+="Task ID, Task Title, Task Status <br>"
 
     with database.snapshot() as snapshot:
         results = snapshot.execute_sql(
