@@ -1,0 +1,5 @@
+site_name: "Terraform Cloud Run Deployment"
+site_description: "This is a Terraform template for deploying docker image using Cloud Run."
+
+nav:
+  - Introduction: index.md

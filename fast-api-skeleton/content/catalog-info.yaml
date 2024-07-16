@@ -5,6 +5,7 @@ metadata:
   annotations:
     "backstage.io/project": ${{ values.project_id | dump }}
     "backstage.io/cloud-run": ${{ values.app_name | dump }}
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: service
   owner: user:guest
