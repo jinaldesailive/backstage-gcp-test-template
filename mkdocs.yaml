@@ -1,4 +1,4 @@
-site_name: "Fast API Application Template + Cloud Run Deployment Template"
+site_name: "FastAPI Application CICD Template"
 site_description: "This is simple FastAPI application created using Uvicorn framework. It will also deploy the FastAPI demo application to the Cloud Run environment."
 
 nav:
