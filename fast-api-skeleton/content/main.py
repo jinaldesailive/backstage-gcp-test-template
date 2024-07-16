@@ -11,12 +11,13 @@ database_id="tododb"
 def healthcheck():
     return 'Health - OK'
 
-@app.get("/db/", response_class=HTMLResponse)
+@app.get("/tasks/", response_class=HTMLResponse)
 def get_db_data():
     spanner_client = spanner.Client()
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
+    output1="<h1>TODO List</h1>"
     output1="Task ID, Task Title, Task Status <br>"
 
     with database.snapshot() as snapshot:
