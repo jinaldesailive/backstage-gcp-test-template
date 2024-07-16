@@ -3,3 +3,5 @@ site_description: "This is simple FastAPI application created using Uvicorn fram
 
 nav:
   - Introduction: index.md
+  - FastAPI Application: fastapi/readme.md
+  - Terraform Deployment: fastapi/readme.md
