@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import uvicorn
 from google.cloud import spanner
 from fastapi.responses import HTMLResponse
+import json
 
 app = FastAPI()
 instance_id="appdb"
