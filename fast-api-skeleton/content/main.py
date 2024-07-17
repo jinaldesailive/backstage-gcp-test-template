@@ -11,22 +11,18 @@ database_id="tododb"
 def healthcheck():
     return 'Health - OK'
 
-@app.get("/tasks/", response_class=HTMLResponse)
+@app.get("/tasks/")
 def get_db_data():
     spanner_client = spanner.Client()
     instance = spanner_client.instance(instance_id)
     database = instance.database(database_id)
 
-    output1="<h1>TODO List</h1>"
-    output1+="Task ID, Task Title, Task Status <br>"
-
     with database.snapshot() as snapshot:
         results = snapshot.execute_sql(
             "SELECT id, title, status FROM tasks"
         )
-        for row in results:
-            output1+=  row[0] + ", " + row[1] + ", " + row[2] + "<br>"
-    return output1;
+        value_json=json.dumps(results.to_dict_list(),indent=4)
+    return value_json;
 
 @app.get("/")
 async def root():
