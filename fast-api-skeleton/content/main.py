@@ -22,8 +22,7 @@ def get_db_data():
         results = snapshot.execute_sql(
             "SELECT id, title, status FROM tasks"
         )
-        value_json=json.dumps(results.to_dict_list())
-    return value_json;
+    return results.to_dict_list();
 
 @app.get("/")
 async def root():
