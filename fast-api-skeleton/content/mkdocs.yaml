@@ -1,5 +1,5 @@
-site_name: "Fast API Application"
-site_description: "This is simple FastAPI application created using Uvicorn framework."
+site_name: "FastAPI Application ${{ values.app_name }}"
+site_description: "This is simple FastAPI application created using Uvicorn framework. ${{ values.description }}"
 
 nav:
   - Introduction: index.md

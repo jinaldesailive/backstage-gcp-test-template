@@ -1,4 +1,6 @@
-# FastAPI Application
+# FastAPI Application ${{ values.app_name }}
+
+This is simple FastAPI application created using Uvicorn framework. ${{ values.description }}
 
 ## Endpoints
 

@@ -1,0 +1,51 @@
+openapi: 3.1.0
+info:
+  title: FastAPI 119
+  description: |-
+    This is example app.
+
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+paths:
+  /hc/:
+    get:
+      summary: Healthcheck
+      description: Test healthcheck endpoint
+      operationId: healthcheck_hc__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+  /tasks/:
+    get:
+      summary: Get DB Data
+      description: Test DB data
+      operationId: get_db_data_tasks__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            text/html:
+              schema:
+                type: string
+  /:
+    get:
+      summary: Root
+      description: Root endpoint
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
