@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
-  title: FastAPI 119
+  title: ${{ values.app_name }}
   description: |-
-    This is example app.
+    ${{ values.description }}
 
   termsOfService: http://swagger.io/terms/
   contact:
