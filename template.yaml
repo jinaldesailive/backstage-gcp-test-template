@@ -14,20 +14,72 @@ spec:
   type: website
 
   parameters:
-    - title: Create a Python FastAPI app in Cloud Run
+    - title: Service / Application details
+      required:
+        - app_name
+        - dataClassification
+      properties:
+        app_name:
+          title: Name
+          type: string
+          description: Unique name of the service
+          ui:autofocus: true
+          ui:options:
+            rows: 3
+          ui:placeholder: |
+            Enter the service name without any whitespaces
+        description:
+          title: Description
+          type: string
+          description: Details about the service
+          ui:options:
+            rows: 3
+          ui:placeholder: |
+            Enter a description that appears in the software catalog
+        iRiskId:
+          title: iRisk Id
+          type: string
+          description: iRisk Id for this service
+          ui:options:
+            rows: 3
+        dataClassification:
+          title: Data Classification
+          type: string
+          description: Sensitivity of the data stored and/or processed by this service
+          default: Business Use
+          enum: [Public, Business Use, Highly Restricted, Secret]
+          ui:options:
+            rows: 3
+        costCenter:
+          title: Cost Center
+          type: string
+          description: Cost center associated with this service
+          ui:options:
+            rows: 3
+
+    - title: Infrastructure details
       required:
         - project_id
-        - app_name
       properties:
         project_id:
-          title: Project Name
+          title: GCP Project ID
           type: string
-          description: Name of the Project to deploy the Cloud Run
-
-        app_name:
-          title: Application Name
+          description: ID of an existing GCP project 
+          ui:autofocus: true
+          ui:options:
+            rows: 3
+        resourceUserGroup:
+          title: Resource User Group
           type: string
-          description: Name of application Service
+          description: Members of this Genie group will have access to all the resources being provisioned (repo, pipelines, infrastructure)
+          ui:options:
+            rows: 3
+        resourceAdminGroup:
+          title: Resource Admin Group
+          type: string
+          description: Members of this Genie group will have administrative access to the resources being provisioned
+          ui:options:
+            rows: 3
 
   steps:
     - id: fetch-base-app
