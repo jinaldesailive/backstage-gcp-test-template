@@ -91,6 +91,7 @@ spec:
         values:
           project_id: ${{ parameters.project_id }}
           app_name: ${{ parameters.app_name }}
+          description: ${{ parameters.description }}
 
     - id: publish-app
       name: Publish Application
